@@ -16,23 +16,11 @@ helm install aws-load-balancer-controller eks/aws-load-balancer-controller -n ku
 
 
 #
-# Deploy a Kubernetes Secret which provides connection information for the database
+# Deploy services
+# This will provision an internal NLB
 #
-kubectl create ns recommender
-kubectl create secret generic postgres-credentials \
---from-literal=POSTGRES_USER=eks \
---from-literal=POSTGRES_PASSWORD=eks \
---from-literal=POSTGRES_DATABASE=amazon \
---from-literal=POSTGRES_HOST=XXXXXXX \
---from-literal=POSTGRES_PORT=5432 \
---from-literal=POSTGRES_TABLEPREFIX=popularity_bucket_  -n recommender
-
-#
-# Deploy the HTTP web service
-#
-kubectl apply -f deployment-http-service.yaml
-
-#
-# Deploy the Ingres to provision an internet-facing ALB fronting the HTTP web service
-#
-kubectl apply -f ingress-http-service.yaml
+## /!\ WARNING /!\
+## values below will only work with the "AWS Load Balancer Controller". Not with the default k8s in-tree controller
+# service.beta.kubernetes.io/aws-load-balancer-type: "external" # https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.2/guide/service/nlb/#configuration
+# service.beta.kubernetes.io/aws-load-balancer-scheme: internal # https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.2/guide/service/nlb/
+# service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: "instance" # https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.2/guide/service/nlb/#instance-mode_1

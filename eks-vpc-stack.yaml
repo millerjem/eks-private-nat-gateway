@@ -9,9 +9,14 @@ Parameters:
     Default: 192.168.16.0/20
     Description: The CIDR range for the VPC. This should be a valid private (RFC 1918) CIDR range.
 
-  PeerVpcBlock:
+  PeerVpcBlock01:
     Type: String
     Default: 192.168.32.0/20
+    Description: The CIDR range for a peer VPC. This should be a valid private (RFC 1918) CIDR range.
+
+  PeerVpcBlock02:
+    Type: String
+    Default: 192.168.48.0/20
     Description: The CIDR range for a peer VPC. This should be a valid private (RFC 1918) CIDR range.
 
   VpcName:
@@ -465,7 +470,7 @@ Resources:
     Type: AWS::EC2::Route
     Properties:
       RouteTableId: !Ref PrivateRouteTableSecondary01
-      DestinationCidrBlock: !Ref PeerVpcBlock
+      DestinationCidrBlock: !Ref PeerVpcBlock01
       NatGatewayId: !Ref PrivateNATGateway1          
 
   PrivateRouteSecondary012:
@@ -475,6 +480,14 @@ Resources:
       RouteTableId: !Ref PrivateRouteTableSecondary01
       DestinationCidrBlock: 0.0.0.0/0
       NatGatewayId: !Ref NATGateway1    
+  
+  PrivateRouteSecondary013:
+    DependsOn: PrivateNATGateway1  
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId: !Ref PrivateRouteTableSecondary01
+      DestinationCidrBlock: !Ref PeerVpcBlock02
+      NatGatewayId: !Ref PrivateNATGateway1          
 
   PrivateRouteTableSecondary02:
     Type: AWS::EC2::RouteTable
@@ -491,7 +504,7 @@ Resources:
     Type: AWS::EC2::Route
     Properties:
       RouteTableId: !Ref PrivateRouteTableSecondary02
-      DestinationCidrBlock: !Ref PeerVpcBlock
+      DestinationCidrBlock: !Ref PeerVpcBlock01
       NatGatewayId: !Ref PrivateNATGateway2
 
   PrivateRouteSecondary022:
@@ -501,6 +514,14 @@ Resources:
       RouteTableId: !Ref PrivateRouteTableSecondary02
       DestinationCidrBlock: 0.0.0.0/0
       NatGatewayId: !Ref NATGateway2      
+  
+  PrivateRouteSecondary023:
+    DependsOn: PrivateNATGateway2  
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId: !Ref PrivateRouteTableSecondary02
+      DestinationCidrBlock: !Ref PeerVpcBlock02
+      NatGatewayId: !Ref PrivateNATGateway2
 
   Subnet01RouteTableAssociation:
     Type: AWS::EC2::SubnetRouteTableAssociation

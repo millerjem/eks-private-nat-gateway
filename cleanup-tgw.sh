@@ -5,9 +5,11 @@ REGION=us-west-2
 TGW_ID=$(aws ec2 describe-transit-gateways --filters "Name=tag:Name,Values=tgw_ab" --query "TransitGateways[].TransitGatewayId" --output text --region $REGION)
 TGW_ATTACHMENT_A_ID=$(aws ec2 describe-transit-gateway-vpc-attachments --filters "Name=tag:Name,Values=tgw_attachment_vpc_a" --query "TransitGatewayVpcAttachments[].TransitGatewayAttachmentId" --output text --region $REGION)
 TGW_ATTACHMENT_B_ID=$(aws ec2 describe-transit-gateway-vpc-attachments --filters "Name=tag:Name,Values=tgw_attachment_vpc_b" --query "TransitGatewayVpcAttachments[].TransitGatewayAttachmentId" --output text --region $REGION)
+TGW_ATTACHMENT_C_ID=$(aws ec2 describe-transit-gateway-vpc-attachments --filters "Name=tag:Name,Values=tgw_attachment_vpc_c" --query "TransitGatewayVpcAttachments[].TransitGatewayAttachmentId" --output text --region $REGION)
 
 aws ec2 delete-transit-gateway-vpc-attachment --transit-gateway-attachment-id $TGW_ATTACHMENT_A_ID --region $REGION
 aws ec2 delete-transit-gateway-vpc-attachment --transit-gateway-attachment-id $TGW_ATTACHMENT_B_ID --region $REGION
+aws ec2 delete-transit-gateway-vpc-attachment --transit-gateway-attachment-id $TGW_ATTACHMENT_C_ID --region $REGION
 
 tqwAttachmentAStatus() {
   aws ec2 describe-transit-gateway-vpc-attachments --transit-gateway-attachment-ids $TGW_ATTACHMENT_A_ID --query "TransitGatewayVpcAttachments[].State" --output text --region $REGION
@@ -15,11 +17,14 @@ tqwAttachmentAStatus() {
 tqwAttachmentBStatus() {
   aws ec2 describe-transit-gateway-vpc-attachments --transit-gateway-attachment-ids $TGW_ATTACHMENT_B_ID --query "TransitGatewayVpcAttachments[].State" --output text --region $REGION
 }
-until [ $(tqwAttachmentAStatus) != "deleting" ] || [ $(tqwAttachmentBStatus) != "deleting" ]; do
-  echo "Waiting for transit gateway attachments $TGW_ATTACHMENT_A_ID and $TGW_ATTACHMENT_B_ID to be deleted ..."
-  sleep 5s
-  if [ $(tqwAttachmentAStatus) = "deleted" ] && [ $(tqwAttachmentBStatus) = "deleted" ]; then
-    echo "Transit gateway attachments $TGW_ATTACHMENT_A_ID and $TGW_ATTACHMENT_B_ID have been deleted"
+tqwAttachmentCStatus() {
+  aws ec2 describe-transit-gateway-vpc-attachments --transit-gateway-attachment-ids $TGW_ATTACHMENT_C_ID --query "TransitGatewayVpcAttachments[].State" --output text --region $REGION
+}
+until [ $(tqwAttachmentAStatus) != "deleting" ] || [ $(tqwAttachmentBStatus) != "deleting" ] || [ $(tqwAttachmentCStatus) != "deleting" ]; do
+  echo "Waiting for transit gateway attachments $TGW_ATTACHMENT_A_ID and $TGW_ATTACHMENT_B_ID and $TGW_ATTACHMENT_C_ID to be deleted ..."
+  sleep 5
+  if [ $(tqwAttachmentAStatus) = "deleted" ] && [ $(tqwAttachmentBStatus) = "deleted" ] && [ $(tqwAttachmentCStatus) = "deleted" ]; then
+    echo "Transit gateway attachments $TGW_ATTACHMENT_A_ID and $TGW_ATTACHMENT_B_ID and $TGW_ATTACHMENT_C_ID have been deleted"
     break
   fi
 done
@@ -32,7 +37,7 @@ tgwStatus() {
 }
 until [ $(tgwStatus) != "deleting" ]; do
   echo "Waiting for transit gateway $TGW_ID to be deleted ..."
-  sleep 5s
+  sleep 5
   if [ $(tgwStatus) = "available" ]; then
     echo "Transit gateway $TGW_ID has been deleted"
     break

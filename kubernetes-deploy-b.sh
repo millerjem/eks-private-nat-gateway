@@ -15,9 +15,11 @@ helm install aws-load-balancer-controller eks/aws-load-balancer-controller -n ku
 --set serviceAccount.name=aws-load-balancer-controller
 
 #
-# Deploy the TCP web service
-# This will provision an internal NLB fronting the web service
+# Deploy services
+# This will provision an internal NLB
 #
-kubectl create ns tcp-services
-kubectl apply -f deployment-tcp-service.yaml
-
+## /!\ WARNING /!\
+## values below will only work with the "AWS Load Balancer Controller". Not with the default k8s in-tree controller
+# service.beta.kubernetes.io/aws-load-balancer-type: "external" # https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.2/guide/service/nlb/#configuration
+# service.beta.kubernetes.io/aws-load-balancer-scheme: internal # https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.2/guide/service/nlb/
+# service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: "instance" # https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.2/guide/service/nlb/#instance-mode_1
