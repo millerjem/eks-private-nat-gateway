@@ -31,7 +31,7 @@ eksctl create iamserviceaccount \
 
 
 #
-# Create IAM role and service account for cluster A
+# Create IAM role and service account for cluster B
 #
 CLUSTER_NAME="EKS-CLUSTER-B"
 SERVICE_ACCOUNT_IAM_ROLE=EKS-AWSLB-Controller-Role-$CLUSTER_NAME
@@ -51,4 +51,24 @@ eksctl create iamserviceaccount \
 --override-existing-serviceaccounts \
 --approve
 
+#
+# Create IAM role and service account for cluster C
+#
+CLUSTER_NAME="EKS-CLUSTER-A"
+SERVICE_ACCOUNT_IAM_ROLE=EKS-AWSLB-Controller-Role-$CLUSTER_NAME
+
+eksctl utils associate-iam-oidc-provider \
+--cluster=$CLUSTER_NAME \
+--region=$REGION \
+--approve
+
+eksctl create iamserviceaccount \
+--cluster=$CLUSTER_NAME \
+--region=$REGION \
+--name=$SERVICE_ACCOUNT_NAME \
+--namespace=$SERVICE_ACCOUNT_NAMESPACE \
+--role-name=$SERVICE_ACCOUNT_IAM_ROLE \
+--attach-policy-arn=$SERVICE_ACCOUNT_IAM_POLICY_ARN \
+--override-existing-serviceaccounts \
+--approve
 
