@@ -5,7 +5,7 @@ CLUSTER_TEMPLATE=eks-cluster-stack.yaml
 VPC_STACK_NAME="eks-vpc-c-stack"
 CLUSTER_STACK_NAME="eks-cluster-c-stack"
 CLUSTER_NAME="EKS-CLUSTER-C"
-CLUSTER_VERSION=1.27
+CLUSTER_VERSION="1.27"
 
 #
 # Create the EKS cluster
