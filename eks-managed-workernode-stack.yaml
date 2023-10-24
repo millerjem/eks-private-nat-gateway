@@ -114,7 +114,7 @@ Conditions:
         - ""
 
 Resources:
-  WorkerNodeLaunchRemplate:
+  WorkerNodeLaunchTemplate:
     Type: AWS::EC2::LaunchTemplate
     Properties:
       LaunchTemplateName: !Join [ '-', [!Sub "${AWS::StackName}", !Ref LaunchTemplateName] ]
@@ -179,11 +179,15 @@ Resources:
         - Fn::ImportValue: !Sub ${VPCStackName}-WORKER-SUBNET01
         - Fn::ImportValue: !Sub ${VPCStackName}-WORKER-SUBNET02
       LaunchTemplate:
-        Id: !Ref WorkerNodeLaunchRemplate
-        Version: !GetAtt WorkerNodeLaunchRemplate.DefaultVersionNumber
+        Id: !Ref WorkerNodeLaunchTemplate
+        Version: !GetAtt WorkerNodeLaunchTemplate.DefaultVersionNumber
       Labels:
         role: managed-worker
         cluster: !Ref ClusterName
+      Taints:
+        - key: "node.cilium.io/agent-not-ready"
+          value: "true"
+          effect: "NoExecute"
 
 Outputs:
   WorkerNodeInstanceRole:
@@ -194,4 +198,4 @@ Outputs:
 
   LaunchTemplate:
     Description: Launch Template ID and Version
-    Value: !Join [ '', ['ID=', !Ref WorkerNodeLaunchRemplate,  ' Version=', !GetAtt WorkerNodeLaunchRemplate.DefaultVersionNumber] ]
+    Value: !Join [ '', ['ID=', !Ref WorkerNodeLaunchTemplate,  ' Version=', !GetAtt WorkerNodeLaunchTemplate.DefaultVersionNumber] ]

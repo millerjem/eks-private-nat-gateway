@@ -13,7 +13,7 @@ This repository contains software artifacts for implementing the networking arch
 #### Setting up the network architecture
 1. Execute the script **vpc-a.sh** to setup a VPC named **EKS-VPC-A** with the routable CIDR 192.168.16.0/20 and non-routable CIDR 100.64.0.0/16
 2. Execute the script **vpc-b.sh** to setup a VPC named **EKS-VPC-B** with the routable CIDR 192.168.32.0/20 and non-routable CIDR 100.64.0.0/16
-3. Execute the script **vpc-b.sh** to setup a VPC named **EKS-VPC-C** with the routable CIDR 192.168.48.0/20 and non-routable CIDR 100.64.0.0/16
+3. Execute the script **vpc-c.sh** to setup a VPC named **EKS-VPC-C** with the routable CIDR 192.168.48.0/20 and non-routable CIDR 100.64.0.0/16
 4. Execute the script **tgw.sh** to setup a transit gateway and transit gateway attachments in order to route traffic between the two VPCs. This script will also update the route tables associated with the transit gateway as well as the routable subnets in the two VPCs.
 
  

@@ -18,8 +18,6 @@ Parameters:
     Type: String
     Default: "1.27"
     AllowedValues:
-    - "1.20"
-    - "1.21"
     - "1.27"
 
 Metadata:
