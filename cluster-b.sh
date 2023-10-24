@@ -30,6 +30,7 @@ aws cloudformation deploy --stack-name $WORKER_STACK_NAME --template-file $WORKE
 VPCStackName=$VPC_STACK_NAME \
 ClusterStackName=$CLUSTER_STACK_NAME \
 ClusterName=$CLUSTER_NAME \
+ClusterVersion=$CLUSTER_VERSION \
 ClusterSecurityGroup=$CLUSTER_SECURITY_GROUP_ID \
 ClusterEndpoint=$CLUSTER_API_SERVER_URL \
 ClusterCertificateAuthority=$B64_CLUSTER_CA \

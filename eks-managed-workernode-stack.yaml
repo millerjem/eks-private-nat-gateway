@@ -185,9 +185,10 @@ Resources:
         role: managed-worker
         cluster: !Ref ClusterName
       Taints:
-        - key: "node.cilium.io/agent-not-ready"
-          value: "true"
-          effect: "NoExecute"
+        - Effect: "NO_EXECUTE"
+          Key: "node.cilium.io/agent-not-ready"
+          Value: "true"
+          
 
 Outputs:
   WorkerNodeInstanceRole:
