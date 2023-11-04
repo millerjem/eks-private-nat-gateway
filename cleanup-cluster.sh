@@ -1,6 +1,6 @@
 ##!/bin/bash
 
-REGION=us-west-2
+REGION=us-east-1
 
 #
 # Delete the managed node groups

@@ -1,6 +1,6 @@
 
 ##!/bin/bash
-REGION=us-west-2
+REGION=us-east-1
 
 TGW_ID=$(aws ec2 describe-transit-gateways --filters "Name=tag:Name,Values=tgw_ab" --query "TransitGateways[].TransitGatewayId" --output text --region $REGION)
 TGW_ATTACHMENT_A_ID=$(aws ec2 describe-transit-gateway-vpc-attachments --filters "Name=tag:Name,Values=tgw_attachment_vpc_a" --query "TransitGatewayVpcAttachments[].TransitGatewayAttachmentId" --output text --region $REGION)

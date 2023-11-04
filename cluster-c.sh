@@ -1,6 +1,6 @@
 ##!/bin/bash
 
-REGION=us-west-2
+REGION=us-east-1
 CLUSTER_TEMPLATE=eks-cluster-stack.yaml
 VPC_STACK_NAME="eks-vpc-c-stack"
 CLUSTER_STACK_NAME="eks-cluster-c-stack"

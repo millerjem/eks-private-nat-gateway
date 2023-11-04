@@ -1,5 +1,5 @@
 ##!/bin/bash
-REGION=us-west-2
+REGION=us-east-1
 SERVICE_ACCOUNT_NAMESPACE=kube-system
 SERVICE_ACCOUNT_NAME=aws-load-balancer-controller
 
