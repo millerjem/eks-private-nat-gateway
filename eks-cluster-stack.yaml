@@ -16,9 +16,9 @@ Parameters:
   ClusterVersion:
     Description: Kubernetes version of the EKS cluster
     Type: String
-    Default: "1.27"
+    Default: "1.25"
     AllowedValues:
-    - "1.27"
+    - "1.25"
 
 Metadata:
   AWS::CloudFormation::Interface:
