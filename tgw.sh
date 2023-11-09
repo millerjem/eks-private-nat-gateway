@@ -1,5 +1,5 @@
 ##!/bin/bash
-REGION=us-west-2
+REGION=us-west-1
 VPC_A_NAME="EKS-VPC-A"
 VPC_B_NAME="EKS-VPC-B"
 VPC_C_NAME="EKS-VPC-C"
