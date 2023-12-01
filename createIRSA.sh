@@ -1,13 +1,12 @@
 ##!/bin/bash
-REGION=us-west-2
+REGION=us-west-1
 SERVICE_ACCOUNT_NAMESPACE=kube-system
 SERVICE_ACCOUNT_NAME=aws-load-balancer-controller
 
 SERVICE_ACCOUNT_IAM_POLICY=EKS-PrivateNAT-AWSLB-Controller-Policy
-#SERVICE_ACCOUNT_IAM_POLICY_ARN=$(aws iam create-policy --policy-name $SERVICE_ACCOUNT_IAM_POLICY \
-#--policy-document file://iam-policy.json \
-#--query 'Policy.Arn' --output text)
-SERVICE_ACCOUNT_IAM_POLICY_ARN="arn:aws:iam::986112284769:policy/EKS-PrivateNAT-AWSLB-Controller-Policy"
+SERVICE_ACCOUNT_IAM_POLICY_ARN=$(aws iam create-policy --policy-name $SERVICE_ACCOUNT_IAM_POLICY \
+--policy-document file://iam-policy.json \
+--query 'Policy.Arn' --output text)
 
 
 #

@@ -1,6 +1,6 @@
 ##!/bin/bash
 
-REGION=us-west-2
+REGION=us-west-1
 VPC_TEMPLATE=eks-vpc-stack.yaml
 VPC_STACK_NAME="eks-vpc-a-stack"
 VPC_NAME="EKS-VPC-A"
